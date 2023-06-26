@@ -3,6 +3,14 @@ import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 import OAuth from '../components/OAuth'
 import { Link } from 'react-router-dom';
 
+import { toast } from 'react-toastify';
+
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { db } from '../firebase';
+
+import { useNavigate } from 'react-router-dom';
+import { doc, setDoc } from 'firebase/firestore';
+
 function Register() {
 
     const [formData, setFormData] = useState({
@@ -12,6 +20,7 @@ function Register() {
     }
     );
     const { name, email, password } = formData;
+    const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -23,7 +32,30 @@ function Register() {
 
     async function onSubmit(e) {
         e.preventDefault();
-        console.log(formData);
+        try {
+            const auth = getAuth();
+            await createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    updateProfile(auth.currentUser, {
+                        displayName: name
+                    })
+
+                    const user = userCredential.user;
+                    const formDataCopy = { ...formData };
+                    delete formDataCopy.password;
+                    setDoc(doc(db, "users", user.uid), formDataCopy);
+
+                    toast.success('Account created successfully');
+                    navigate('/');
+                })
+                .catch((error) => {
+                    toast.error("Something went wrong");
+                });
+        }
+        catch (err) {
+            toast.error(err.message);
+        }
     }
 
     return (

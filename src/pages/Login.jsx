@@ -3,6 +3,12 @@ import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 import OAuth from '../components/OAuth'
 import { Link } from 'react-router-dom';
 
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { db } from '../firebase'
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
+
+
 function Login() {
 
     const [formData, setFormData] = useState({
@@ -11,6 +17,8 @@ function Login() {
     }
     );
     const { email, password } = formData;
+
+    const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -22,7 +30,17 @@ function Login() {
 
     async function onSubmit(e) {
         e.preventDefault();
-        console.log(formData);
+        try {
+            const auth = getAuth();
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            if (userCredential.user) {
+                navigate('/');
+                toast.success(`Welcome ${userCredential.user.displayName}`);
+            }
+        }
+        catch (error) {
+            toast.error(error.message);
+        }
     }
 
     return (

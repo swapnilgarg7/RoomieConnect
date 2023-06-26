@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import OAuth from '../components/OAuth'
 import { Link } from 'react-router-dom';
 
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { db } from '../firebase'
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
+
 function ForgotPass() {
     const [email, setEmail] = useState("");
 
@@ -11,9 +16,19 @@ function ForgotPass() {
 
     }
 
+    const navigate = useNavigate();
+
     async function onSubmit(e) {
         e.preventDefault();
-        console.log(email);
+        try {
+            const auth = getAuth();
+            await sendPasswordResetEmail(auth, email);
+            toast.success(`Reset link sent to ${email}`);
+            navigate('/login');
+        }
+        catch (error) {
+            toast.error(error.message);
+        }
     }
 
     return (

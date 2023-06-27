@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { getAuth } from 'firebase/auth';
+import { getAuth, updateProfile } from 'firebase/auth';
+import { db } from '../firebase';
+import { doc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
@@ -9,6 +11,8 @@ function Profile() {
 
     const navigate = useNavigate();
 
+    const [changeDetails, setChangeDetails] = useState(false);
+
     const [formData, setFormData] = useState({
         name: auth.currentUser.displayName,
         email: auth.currentUser.email
@@ -17,12 +21,36 @@ function Profile() {
     const { name, email } = formData;
 
     function onChange(e) {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
     }
 
     function onLogout() {
         auth.signOut();
         navigate('/login');
         toast.success('Logged out successfully');
+    }
+
+    async function onSubmit() {
+        try {
+            if (name !== auth.currentUser.displayName) {
+                await updateProfile(auth.currentUser, {
+                    displayName: name
+
+                });
+                toast.success('Profile updated successfully');
+                const docRef = doc(db, "users", auth.currentUser.uid);
+                await updateDoc(docRef, {
+                    name: name
+                });
+
+
+            }
+
+        }
+        catch (err) {
+            toast.error(err.message);
+        }
+
     }
 
     return (
@@ -32,10 +60,11 @@ function Profile() {
 
                 <div className='w-full md:w-1/2 px-3'>
                     <form>
-                        <input className='w-full justify-center px-4 py-2 text-xl text-secondary
-                            border-primary rounded-xl transition ease-in-out bg-white'
+                        <input className={`w-full justify-center px-4 py-2 text-xl text-secondary
+                            border-primary rounded-xl transition ease-in-out bg-white 
+                            ${changeDetails && "bg-red-100"}`}
                             type='text' id="name" value={name} onChange={onChange}
-                            disabled placeholder='Name' />
+                            disabled={!changeDetails} placeholder='Name' />
                         <input className='w-full justify-center px-4 py-2 text-xl text-secondary
                             border-primary rounded-xl transition ease-in-out bg-white mt-2 mb-6'
                             type='email' id="email" value={email} onChange={onChange}
@@ -44,9 +73,13 @@ function Profile() {
                         <div className='flex justify-between whitespace-nowrap text-sm sm:text-lg mb-6 px-2'>
                             <p className='flex items-center text-light
                             border-primary rounded-xl transition ease-in-out bg-secondary
-                            hover:bg-accent hover:text-primary py-2 px-4 cursor-pointer'>
-                                <span className=''>
-                                    Edit your name</span>
+                            hover:bg-accent hover:text-primary py-2 px-4 cursor-pointer'
+                                onClick={() => {
+                                    changeDetails && onSubmit();
+                                    setChangeDetails((prevState) => !prevState)
+                                }}>
+
+                                {changeDetails ? 'Apply Changes' : 'Edit Your Name'}
                             </p>
                             <p className='text-light
                             border-primary rounded-xl transition ease-in-out bg-red-500

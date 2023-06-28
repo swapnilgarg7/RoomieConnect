@@ -7,6 +7,8 @@ function CreatePost() {
         vacancy: 1,
         washroom: "indian",
         ac: true,
+        furnished: true,
+        gender: "male",
         bhk: 0,
         rent: 0,
         address: "",
@@ -24,7 +26,7 @@ function CreatePost() {
             <h1 className='text-3xl text-center text-primary my-6 font-bold mb-12'>Create Post</h1>
 
             <form>
-                <p className='text-primary text-2xl font-semibold'>Name:</p>
+                <p className='text-primary text-2xl font-semibold'>Your Name:</p>
                 <input type='text' id='name' value={name} onChange={onChange} required
                     className='w-full border border-primary rounded-md p-2 mb-4' />
                 <p className='text-primary text-2xl font-semibold'>Number of Roommates vacancy:</p>

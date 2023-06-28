@@ -118,8 +118,8 @@ function CreatePost() {
                         multiple
                         required
                         className='w-full border border-primary rounded-md p-2 mt-2 mb-4 ' />
-
                 </div>
+
                 <button type="submit" className='mb-12 w-full bg-primary p-4 text-light text-xl rounded-xl hover:bg-accent font-semibold shadow-md shadow-black
                     transition duration-150 ease-in-out hover:shadow-secondary'>
                     Submit Post

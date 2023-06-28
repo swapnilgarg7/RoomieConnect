@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
-function Profile() {
+export default function Profile() {
 
     const auth = getAuth();
 
@@ -105,4 +105,5 @@ function Profile() {
     )
 }
 
-export default Profile
+
+

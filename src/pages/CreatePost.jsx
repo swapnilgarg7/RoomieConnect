@@ -4,6 +4,7 @@ function CreatePost() {
 
     const [formData, setFormData] = useState({
         name: "",
+        contact: "",
         vacancy: 1,
         washroom: "indian",
         ac: true,
@@ -14,7 +15,7 @@ function CreatePost() {
         address: "",
         description: "",
     });
-    const { name, vacancy, washroom, ac, bhk, rent, address, description } = formData;
+    const { name, contact, vacancy, washroom, ac, furnished, gender, bhk, rent, address, description, } = formData;
 
 
 

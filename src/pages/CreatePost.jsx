@@ -71,7 +71,7 @@ function CreatePost() {
                         No
                     </button>
                 </div>
-                <p className='text-primary text-2xl font-semibold'>Washroom Type?</p>
+                <p className='text-primary text-2xl font-semibold'>Washroom Type:</p>
                 <div className='flex mb-4'>
                     <button
                         type='button'

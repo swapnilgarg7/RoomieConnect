@@ -4,6 +4,7 @@ import { db } from '../firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 function Profile() {
 
@@ -90,6 +91,12 @@ function Profile() {
 
                         </div>
                     </form>
+                    <button type="submit" className='mt-6 w-full bg-primary p-4 text-light text-xl rounded-xl hover:bg-accent font-semibold shadow-md shadow-black
+                    transition duration-150 ease-in-out hover:shadow-secondary'>
+                        <Link to="/create-post">
+                            Create Post to find a Roommate
+                        </Link>
+                    </button>
 
                 </div>
 

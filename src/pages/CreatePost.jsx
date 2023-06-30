@@ -134,7 +134,8 @@ function CreatePost() {
             ...formData,
             images: imgURLs,
             lat: geolocation.lat, lng: geolocation.lng,
-            timestamp: serverTimestamp()
+            timestamp: serverTimestamp(),
+            userRef: auth.currentUser.uid
         };
         delete formDataCopy.images;
         delete formDataCopy.lat;

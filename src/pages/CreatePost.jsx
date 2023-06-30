@@ -1,6 +1,16 @@
 import React, { useState } from 'react'
+import Spinner from '../components/Spinner'
+import { toast } from 'react-toastify';
+import { getAuth } from 'firebase/auth';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
 
 function CreatePost() {
+
+    const auth = getAuth();
+
+    const [geoLocationEnabled, setGeoLocationEnabled] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         name: "",
@@ -14,8 +24,11 @@ function CreatePost() {
         rent: 0,
         address: "",
         description: "",
+        lat: 0,
+        lng: 0,
+        images: {},
     });
-    const { name, contact, vacancy, washroom, ac, furnished, gender, bhk, rent, address, description, } = formData;
+    const { name, contact, vacancy, washroom, ac, furnished, gender, bhk, rent, address, description, lat, lng, images } = formData;
 
 
 
@@ -42,11 +55,81 @@ function CreatePost() {
             }));
         }
     }
+
+    async function onSubmit(e) {
+        e.preventDefault();
+        setLoading(true);
+
+        if (images.length > 6) {
+            setLoading(false);
+            toast.error("Maximum 6 images allowed");
+            return;
+        }
+        let geolocation = {};
+        let location;
+        if (geoLocationEnabled) {
+            const res = await fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=' + process.env.GEOCODE_API);
+            const data = await res.json();
+            geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
+            geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
+
+            location = data.status === "ZERO_RESULTS" ? false : true;
+
+            if (!location) {
+                setLoading(false);
+                toast.error("Invalid Address");
+                return;
+            }
+        }
+        else {
+            geolocation.lat = lat;
+            geolocation.lng = lng;
+        }
+
+        async function storeImage(image) {
+
+            return new Promise((resolve, reject) => {
+                const storage = getStorage();
+                const filename = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
+                const storageRef = ref(storage, filename);
+                const uploadTask = uploadBytesResumable(storageRef, image);
+                uploadTask.on('state_changed',
+                    (snapshot) => {
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log('Upload is ' + progress + '% done');
+                    }
+                    , (error) => {
+                        reject(error);
+                    }
+                    , () => {
+                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                            resolve(downloadURL);
+                        });
+                    }
+                );
+            }
+            );
+        }
+
+        const imgURLs = await Promise.all(
+            [...images].map((image) => storeImage(image)).catch((err) => {
+                setLoading(false);
+                toast.error("Error uploading images");
+                return;
+            })
+        );
+
+    }
+
+
+    if (loading) {
+        return <Spinner />
+    }
     return (
         <div className='max-w-md px-2 mx-auto'>
             <h1 className='text-3xl text-center text-primary my-6 font-bold mb-12'>Create Post</h1>
 
-            <form>
+            <form onSubmit={onSubmit}>
                 <p className='text-primary text-2xl font-semibold'>Your Name:</p>
                 <input type='text' id='name' value={name} onChange={onChange} required
                     className='w-full border border-primary rounded-md p-2 mb-4' />
@@ -128,8 +211,19 @@ function CreatePost() {
                 <p className='text-primary text-2xl font-semibold'>Address:</p>
                 <textarea type='text' id='address' value={address} onChange={onChange} required
                     className='w-full border border-primary rounded-md p-2 mb-4 ' />
+                <div>
+                    {!geoLocationEnabled && <p className='text-primary text-2xl font-semibold'>Latitude:</p>}
+                    {!geoLocationEnabled && <input type='number' id='lat' value={lat} onChange={onChange} required
+                        min="-90" max="90"
+                        className='w-full border border-primary rounded-md p-2 mb-4 ' />}
+                    {!geoLocationEnabled && <p className='text-primary text-2xl font-semibold'>Longitude:</p>}
+                    {!geoLocationEnabled && <input type='number' id='lng' value={lng} onChange={onChange} required
+                        min="-180" max="180"
+                        className='w-full border border-primary rounded-md p-2 mb-4 ' />}
+                </div>
 
-                <p className='text-primary text-2xl font-semibold'>Additional Description/Details:</p>
+
+                <p className='text-primary text-2xl font-semibold mt-4'>Additional Description/Details:</p>
                 <textarea type='text' id='description' value={description} onChange={onChange}
                     className='w-full border border-primary rounded-md p-2 mb-4 ' />
 
@@ -152,5 +246,6 @@ function CreatePost() {
         </div>
     )
 }
+
 
 export default CreatePost

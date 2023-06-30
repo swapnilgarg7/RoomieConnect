@@ -93,17 +93,20 @@ function CreatePost() {
                 const filename = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
                 const storageRef = ref(storage, filename);
                 const uploadTask = uploadBytesResumable(storageRef, image);
+                console.log('uploading image: ' + image.name);
                 uploadTask.on('state_changed',
                     (snapshot) => {
                         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                         console.log('Upload is ' + progress + '% done');
                     }
                     , (error) => {
+                        console.log(error);
                         reject(error);
                     }
                     , () => {
                         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                             resolve(downloadURL);
+
                         });
                     }
                 );
@@ -111,12 +114,16 @@ function CreatePost() {
             );
         }
 
+
+
         const imgURLs = await Promise.all(
             [...images].map((image) => storeImage(image))).catch((err) => {
                 setLoading(false);
                 toast.error("Error uploading images");
                 return;
             });
+
+
 
     }
 

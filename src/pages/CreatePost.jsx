@@ -19,8 +19,28 @@ function CreatePost() {
 
 
 
-    function onChange() {
-
+    function onChange(e) {
+        let boolean = null;
+        if (e.target.value === "true") {
+            boolean = true;
+        }
+        if (e.target.value === "false") {
+            boolean = false;
+        }
+        if (e.target.files) {
+            setFormData((prevState) =>
+            ({
+                ...prevState,
+                images: e.target.files
+            }));
+        }
+        if (!e.target.files) {
+            setFormData((prevState) =>
+            ({
+                ...prevState,
+                [e.target.id]: boolean ?? e.target.value
+            }));
+        }
     }
     return (
         <div className='max-w-md px-2 mx-auto'>
@@ -47,7 +67,7 @@ function CreatePost() {
                 <div className='flex mb-4'>
                     <button
                         type='button'
-                        value={ac}
+                        value={true}
                         id="ac"
                         onClick={onChange}
                         className={
@@ -61,7 +81,7 @@ function CreatePost() {
                     </button>
                     <button
                         type='button'
-                        value={ac}
+                        value={false}
                         id="ac"
                         onClick={onChange}
                         className={
@@ -78,7 +98,7 @@ function CreatePost() {
                 <div className='flex mb-4'>
                     <button
                         type='button'
-                        value={washroom}
+                        value="indian"
                         id="washroom"
                         onClick={onChange}
                         className={
@@ -92,7 +112,7 @@ function CreatePost() {
                     </button>
                     <button
                         type='button'
-                        value={washroom}
+                        value="western"
                         id="washroom"
                         onClick={onChange}
                         className={

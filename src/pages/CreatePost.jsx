@@ -60,6 +60,7 @@ function CreatePost() {
 
     async function onSubmit(e) {
         e.preventDefault();
+        toast.info("Please wait while we create your post");
         setLoading(true);
 
         if (images.length > 6) {
@@ -133,6 +134,9 @@ function CreatePost() {
             timestamp: serverTimestamp()
         };
         delete formDataCopy.images;
+        const docRef = await addDoc(collection(db, "listings"), formDataCopy);
+        setLoading(false);
+        toast.success("Post created successfully");
 
 
     }

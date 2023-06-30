@@ -6,10 +6,13 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/
 import { v4 as uuidv4 } from 'uuid';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
+import { useNavigate } from 'react-router';
 
 function CreatePost() {
 
     const auth = getAuth();
+
+    const navigate = useNavigate();
 
     const [geoLocationEnabled, setGeoLocationEnabled] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -134,9 +137,12 @@ function CreatePost() {
             timestamp: serverTimestamp()
         };
         delete formDataCopy.images;
+        delete formDataCopy.lat;
+        delete formDataCopy.lng;
         const docRef = await addDoc(collection(db, "listings"), formDataCopy);
         setLoading(false);
         toast.success("Post created successfully");
+        navigate(`/post/${docRef.id}`);
 
 
     }

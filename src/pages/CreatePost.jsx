@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import { getAuth } from 'firebase/auth';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase';
 
 function CreatePost() {
 
@@ -93,14 +95,14 @@ function CreatePost() {
                 const filename = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
                 const storageRef = ref(storage, filename);
                 const uploadTask = uploadBytesResumable(storageRef, image);
-                console.log('uploading image: ' + image.name);
+
                 uploadTask.on('state_changed',
                     (snapshot) => {
                         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                         console.log('Upload is ' + progress + '% done');
                     }
                     , (error) => {
-                        console.log(error);
+
                         reject(error);
                     }
                     , () => {
@@ -122,7 +124,15 @@ function CreatePost() {
                 toast.error("Error uploading images");
                 return;
             });
+        console.log('done' + imgURLs);
 
+        const formDataCopy = {
+            ...formData,
+            images: imgURLs,
+            lat: geolocation.lat, lng: geolocation.lng,
+            timestamp: serverTimestamp()
+        };
+        delete formDataCopy.images;
 
 
     }

@@ -112,12 +112,11 @@ function CreatePost() {
         }
 
         const imgURLs = await Promise.all(
-            [...images].map((image) => storeImage(image)).catch((err) => {
+            [...images].map((image) => storeImage(image))).catch((err) => {
                 setLoading(false);
                 toast.error("Error uploading images");
                 return;
-            })
-        );
+            });
 
     }
 

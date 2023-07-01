@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getAuth, updateProfile } from 'firebase/auth';
 import { db } from '../firebase';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, collection, query, where, orderBy, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import Spinner from '../components/Spinner';
+import Post from '../components/Post';
+
 
 export default function Profile() {
 
@@ -13,6 +16,9 @@ export default function Profile() {
     const navigate = useNavigate();
 
     const [changeDetails, setChangeDetails] = useState(false);
+
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const [formData, setFormData] = useState({
         name: auth.currentUser.displayName,
@@ -54,6 +60,22 @@ export default function Profile() {
 
     }
 
+    useEffect(() => {
+        async function fetchUserPosts() {
+
+            const postRef = collection(db, 'posts');
+            const userPostsQuery = query(postRef, where("userRef", "==", auth.currentUser.uid),
+                orderBy("timestamp", "desc"));
+            const userPostsSnapshot = await getDocs(userPostsQuery);
+            let posts = [];
+            userPostsSnapshot.forEach((doc) => {
+                return posts.push({ data: doc.data(), id: doc.id });
+            });
+            setPosts(posts);
+            setLoading(false);
+        }
+        fetchUserPosts();
+    }, [auth.currentUser.uid]);
     return (
         <div>
             <section className='max-w-6xl flex flex-col items-center justify-content mx-auto'>
@@ -101,6 +123,19 @@ export default function Profile() {
                 </div>
 
             </section>
+            <div className='mt-12 max-w-6xl px-3 mx-auto'>
+                {!loading && (
+                    <>
+                        <h2 className='text-3xl text-primary text-center font-semibold'>My Posts</h2>
+                        <ul>
+                            {posts.map((post) => (
+                                <Post key={post.id} post={post.data} id={post.id} />
+                            ))}
+                        </ul>
+                    </>
+                )}
+                {loading && <Spinner />}
+            </div>
         </div>
     )
 }

@@ -140,7 +140,7 @@ function CreatePost() {
         delete formDataCopy.images;
         delete formDataCopy.lat;
         delete formDataCopy.lng;
-        const docRef = await addDoc(collection(db, "listings"), formDataCopy);
+        const docRef = await addDoc(collection(db, "posts"), formDataCopy);
         setLoading(false);
         toast.success("Post created successfully");
         navigate(`/post/${docRef.id}`);

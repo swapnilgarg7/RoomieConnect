@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getAuth, updateProfile } from 'firebase/auth';
 import { db } from '../firebase';
-import { doc, updateDoc, collection, query, where, orderBy, getDocs } from 'firebase/firestore';
+import { doc, updateDoc, collection, query, where, orderBy, getDocs, deleteDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
@@ -76,6 +76,22 @@ export default function Profile() {
         }
         fetchUserPosts();
     }, [auth.currentUser.uid]);
+
+    async function onDelete(postID) {
+        if (window.confirm('Are you sure you want to delete this post?')) {
+            await deleteDoc(doc(db, 'posts', postID));
+            const newPosts = posts.filter((post) => post.id !== postID);
+            setPosts(newPosts);
+            toast.success('Post deleted successfully');
+        }
+    }
+
+    function onEdit(postID) {
+        navigate(`/edit-post/${postID}`);
+    }
+
+
+
     return (
         <div>
             <section className='max-w-6xl flex flex-col items-center justify-content mx-auto'>
@@ -129,7 +145,13 @@ export default function Profile() {
                         <h2 className='text-3xl text-primary text-center font-semibold mb-6'>My Posts</h2>
                         <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
                             {posts.map((post) => (
-                                <Post key={post.id} post={post.data} id={post.id} />
+                                <Post
+                                    key={post.id}
+                                    post={post.data}
+                                    id={post.id}
+                                    onDelete={() => onDelete(post.id)}
+                                    onEdit={() => onEdit(post.id)}
+                                />
                             ))}
                         </ul>
                     </>

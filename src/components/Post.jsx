@@ -1,11 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { MdLocationOn } from 'react-icons/md'
+import { MdLocationOn, MdEdit } from 'react-icons/md'
+import { FaTrash } from 'react-icons/fa'
 
-function Post({ post, id }) {
+function Post({ post, id, onEdit, onDelete }) {
     return (
         <li className='bg-white flex flex-col justify-between items-center shadow-md
-        hover:shadow-xl rounded-lg overflow-hidden transition-shadow duration-150 pb-4'>
+        hover:shadow-xl rounded-lg overflow-hidden transition-shadow duration-150 pb-4 relative'>
             <Link to={`/post/{id}`}>
                 <img
                     className='w-72 h-48 object-cover 
@@ -30,6 +31,18 @@ function Post({ post, id }) {
                     </div>
                 </div>
             </Link>
+            {onEdit && (
+                <MdEdit
+                    className='absolute bottom-2 right-7 h-[18px] w-auto  cursor-pointer text-primary hover:text-accent'
+                    onClick={() => onEdit(post.id)} />
+
+            )}
+            {onDelete && (
+                <FaTrash
+                    className='absolute bottom-2 right-2 cursor-pointer text-red-500 hover:text-red-800'
+                    onClick={() => onDelete(post.id)} />
+
+            )}
         </li>
     )
 }

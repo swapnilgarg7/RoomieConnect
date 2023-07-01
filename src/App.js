@@ -10,6 +10,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import CreatePost from "./pages/CreatePost";
+import EditPost from "./pages/EditPOst";
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
 
           <Route path="/create-post" element={<PrivateRoute />}>
             <Route path="/create-post" element={<CreatePost />} />
+          </Route>
+          <Route path="/edit-post" element={<PrivateRoute />}>
+            <Route path="/edit-post" element={<EditPost />} />
           </Route>
         </Routes>
       </Router>

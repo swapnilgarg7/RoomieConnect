@@ -123,11 +123,11 @@ export default function Profile() {
                 </div>
 
             </section>
-            <div className='mt-12 max-w-6xl px-3 mx-auto'>
+            <div className='my-12 max-w-6xl px-3 mx-auto'>
                 {!loading && (
                     <>
-                        <h2 className='text-3xl text-primary text-center font-semibold'>My Posts</h2>
-                        <ul>
+                        <h2 className='text-3xl text-primary text-center font-semibold mb-6'>My Posts</h2>
+                        <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
                             {posts.map((post) => (
                                 <Post key={post.id} post={post.data} id={post.id} />
                             ))}

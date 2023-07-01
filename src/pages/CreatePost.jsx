@@ -132,8 +132,8 @@ function CreatePost() {
 
         const formDataCopy = {
             ...formData,
-            images: imgURLs,
-            lat: geolocation.lat, lng: geolocation.lng,
+            imgURLs,
+            geolocation,
             timestamp: serverTimestamp(),
             userRef: auth.currentUser.uid
         };

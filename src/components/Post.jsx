@@ -7,7 +7,7 @@ function Post({ post, id, onEdit, onDelete }) {
     return (
         <li className='bg-white flex flex-col justify-between items-center shadow-md
         hover:shadow-xl rounded-lg overflow-hidden transition-shadow duration-150 pb-4 relative'>
-            <Link to={`/post/{id}`}>
+            <Link to={`/post/${id}`}>
                 <img
                     className='w-72 h-48 object-cover 
                     aspect-square

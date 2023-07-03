@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import CreatePost from "./pages/CreatePost";
 import EditPost from "./pages/EditPost";
+import Post from "./pages/Post";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/forgotpassword" element={<ForgotPass />} />
           <Route path="/offers" element={<Offers />} />
+          <Route path="/post/:postId" element={<Post />} />
 
           <Route path="/create-post" element={<PrivateRoute />}>
             <Route path="/create-post" element={<CreatePost />} />

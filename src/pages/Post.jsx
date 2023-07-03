@@ -8,6 +8,7 @@ import Spinner from '../components/Spinner';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, EffectFade, Autoplay } from 'swiper';
 import 'swiper/css/bundle';
+import { FaShare } from 'react-icons/fa';
 
 export default function Post() {
 
@@ -58,6 +59,15 @@ export default function Post() {
                         </div>
                     </SwiperSlide>))}
             </Swiper>
+            <div className='fixed top-[13%] right-[3%] z-10 bg-light cursor-pointer
+            border-2 border-primary rounded-xl p-2'
+                onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    toast.success('Link copied to clipboard');
+                }}
+            >
+                <FaShare />
+            </div>
         </main>
     )
 }

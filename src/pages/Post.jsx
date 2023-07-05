@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, EffectFade, Autoplay } from 'swiper';
 import 'swiper/css/bundle';
 import { FaShare, FaMapMarkerAlt } from 'react-icons/fa';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
 export default function Post() {
 
@@ -116,8 +117,16 @@ export default function Post() {
 
 
                 </div>
-                <div className='bg-green-500 w-full h-[200px] lg:h-[400px] z-10 overflow-x-hidden'>
+                <div className=' w-full  z-10 overflow-x-hidden mt-2'>
+                    <MapContainer center={[post.geolocation.lat, post.geolocation.lng]} zoom={13} scrollWheelZoom={false}
+                        style={{ height: "100%", width: "100%" }}>
 
+                        <Marker position={[post.geolocation.lat, post.geolocation.lng]}>
+                            <Popup>
+                                This is the location of the apartment
+                            </Popup>
+                        </Marker>
+                    </MapContainer>
                 </div>
             </div>
         </main >

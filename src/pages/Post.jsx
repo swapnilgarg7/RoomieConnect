@@ -8,7 +8,7 @@ import Spinner from '../components/Spinner';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, EffectFade, Autoplay } from 'swiper';
 import 'swiper/css/bundle';
-import { FaShare } from 'react-icons/fa';
+import { FaShare, FaMapMarkerAlt } from 'react-icons/fa';
 
 export default function Post() {
 
@@ -68,6 +68,58 @@ export default function Post() {
             >
                 <FaShare />
             </div>
-        </main>
+
+            <div className='m-4 p-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto 
+            rounded-lg shadow-lg border-3 lg:space-x-5 '>
+                <div className=' w-full h-[200px] lg:h-[400px]'>
+                    <div className='flex items-center mb-4 justify-between'>
+                        <p className='text-2xl font-bold text-primary'>
+                            {post.bhk} apartment
+                        </p>
+                        <p className='text-xl  text-primary font-semibold'>
+                            Vacancy : {post.vacancy}
+                        </p>
+                    </div>
+
+                    <p className='text-xl font-bold mb-4 text-secondary'>
+                        Rent : ₹{post.rent} / month
+                    </p>
+                    <div className='flex items-center mb-4'>
+                        <FaMapMarkerAlt className='h-8 w-8 text-red-500' />
+                        <p className='font-semibold text-lg my-2 text-gray-700 truncate'>
+                            {post.address}
+                        </p>
+                    </div>
+                    <p className='text-xl mb-4 text-primary'>
+                        <span className='font-semibold'>Additional details :</span> {post.description}
+                    </p>
+
+
+
+                    <p className='text-xl font-bold  text-primary'>
+                        Facilities:
+                    </p>
+                    <ul className='text-lg'>
+                        <li>{post.washroom === "indian" ? "Indian washroom" : "Western washroom"}</li>
+                        <li>{post.ac ? "AC provided" : "Non-AC "}</li>
+                    </ul>
+                    <p className='text-xl font-bold mt-2 text-primary'>
+                        Contact:
+                    </p>
+                    <p>
+                        {post.name}
+                        <br />
+                        <a className='underline cursor-pointer' href={`tel:+91${post.contact}`} >
+                            +91 {post.contact}
+                        </a>
+                    </p>
+
+
+                </div>
+                <div className='bg-green-500 w-full h-[200px] lg:h-[400px] z-10 overflow-x-hidden'>
+
+                </div>
+            </div>
+        </main >
     )
 }

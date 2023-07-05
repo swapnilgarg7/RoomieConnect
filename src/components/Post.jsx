@@ -15,8 +15,8 @@ function Post({ post, id, onEdit, onDelete }) {
                     src={post.imgURLs[0]}
                     loading='lazy'
                     alt="img" />
-                <div className='px-4'>
-                    <div className='flex items-center'>
+                <div className='px-4 w-full'>
+                    <div className='flex items-center flex-wrap'>
                         <MdLocationOn className='h-4 w-4 text-red-500' />
                         <p className='font-semibold text-sm my-2 text-gray-700 truncate'>
                             {post.address}
@@ -25,11 +25,7 @@ function Post({ post, id, onEdit, onDelete }) {
                     <p className='font-semibold text-lg'>{post.bhk} apartment</p>
                     <p className='text-secondary font-bold'> ₹{post.rent}  / month</p>
                 </div>
-                <div>
-                    <div className='flex'>
 
-                    </div>
-                </div>
             </Link>
             {onEdit && (
                 <MdEdit

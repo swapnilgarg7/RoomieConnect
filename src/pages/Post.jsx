@@ -28,6 +28,7 @@ export default function Post() {
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 setPost(docSnap.data());
+                console.log(post);
                 setLoading(false);
             }
             else {
@@ -72,7 +73,7 @@ export default function Post() {
 
             <div className='m-4 p-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto 
             rounded-lg shadow-lg border-3 lg:space-x-5 '>
-                <div className=' w-full h-[200px] lg:h-[400px]'>
+                <div className=' w-full '>
                     <div className='flex items-center mb-4 justify-between'>
                         <p className='text-2xl font-bold text-primary'>
                             {post.bhk} apartment
@@ -118,7 +119,7 @@ export default function Post() {
 
                 </div>
                 <div className=' w-full  z-10 overflow-x-hidden mt-2'>
-                    <MapContainer center={[post.geolocation.lat, post.geolocation.lng]} zoom={13} scrollWheelZoom={false}
+                    <MapContainer center={[post.geolocation.lat, post.geolocation.lng]} zoom={13} scrollWheelZoom={true}
                         style={{ height: "100%", width: "100%" }}>
 
                         <Marker position={[post.geolocation.lat, post.geolocation.lng]}>

@@ -80,6 +80,8 @@ export default function Post() {
                         </p>
                         <p className='text-xl  text-primary font-semibold'>
                             Vacancy : {post.vacancy}
+                            <br />
+                            For : {post.gender === "male" ? "Male" : "Female"}
                         </p>
                     </div>
 

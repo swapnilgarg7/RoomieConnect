@@ -27,6 +27,7 @@ function EditPost() {
         vacancy: 1,
         washroom: "indian",
         ac: true,
+        wifi: true,
         furnished: true,
         gender: "male",
         bhk: 0,

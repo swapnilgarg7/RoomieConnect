@@ -51,8 +51,18 @@ export default function Slider() {
                                 background: `url(${data.imgURLs[0]}) center no-repeat`,
                                 backgroundSize: "cover"
                             }}>
-
+                            <p className='absolute left-2 top-3 
+                            font-medium bg-secondary text-light
+                            rounded-xl py-2 px-4 shadow-lg opacity-90'>
+                                {data.bhk} apartment
+                            </p>
+                            <p className='absolute left-2 bottom-3 
+                            font-medium bg-green-100 text-primary
+                            rounded-xl py-2 px-4 shadow-lg opacity-90'>
+                                ₹{data.rent}  / month
+                            </p>
                         </div>
+
                     </SwiperSlide>))}
             </Swiper>
         </div>

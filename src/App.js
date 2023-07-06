@@ -4,7 +4,6 @@ import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPass from "./pages/ForgotPass";
-import Offers from "./pages/Offers";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
@@ -27,7 +26,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgotpassword" element={<ForgotPass />} />
-          <Route path="/offers" element={<Offers />} />
           <Route path="/post/:postId" element={<Post />} />
 
           <Route path="/create-post" element={<PrivateRoute />}>

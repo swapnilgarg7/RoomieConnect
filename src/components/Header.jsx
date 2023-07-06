@@ -41,9 +41,6 @@ function Header() {
                         }
                             onClick={() => navigate("/")}>Home</li>
                         <li className={`cursor-pointer py-3 border-b-[3px] border-transparent
-                        ${pathMatchRoute("/offers") && "text-primary border-b-accent"}`}
-                            onClick={() => navigate("/offers")}>Offers</li>
-                        <li className={`cursor-pointer py-3 border-b-[3px] border-transparent
                         ${(pathMatchRoute("/login") || pathMatchRoute("/profile")) && "text-primary border-b-accent"}`}
                             onClick={() => navigate("/profile")}>{pageState}</li>
                     </ul>

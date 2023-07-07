@@ -74,11 +74,11 @@ export default function Post() {
             <div className='m-4 p-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto 
             rounded-lg shadow-lg border-3 lg:space-x-5 '>
                 <div className=' w-full '>
-                    <div className='flex items-start justify-between'>
-                        <p className='text-2xl font-bold text-primary mt-4'>
+                    <div className='flex items-start justify-between mb-4'>
+                        <p className='text-2xl font-bold text-primary'>
                             {post.bhk} apartment
                         </p>
-                        <p className='text-xl  text-primary font-semibold mt-4'>
+                        <p className='text-xl  text-primary font-semibold'>
                             Vacancy : {post.vacancy}
                             <br />
                             For : {post.gender === "male" ? "Male" : "Female"}

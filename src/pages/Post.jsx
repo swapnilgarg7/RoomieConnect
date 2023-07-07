@@ -74,11 +74,11 @@ export default function Post() {
             <div className='m-4 p-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto 
             rounded-lg shadow-lg border-3 lg:space-x-5 '>
                 <div className=' w-full '>
-                    <div className='flex items-center mb-4 justify-between'>
-                        <p className='text-2xl font-bold text-primary'>
+                    <div className='flex items-start justify-between'>
+                        <p className='text-2xl font-bold text-primary mt-4'>
                             {post.bhk} apartment
                         </p>
-                        <p className='text-xl  text-primary font-semibold'>
+                        <p className='text-xl  text-primary font-semibold mt-4'>
                             Vacancy : {post.vacancy}
                             <br />
                             For : {post.gender === "male" ? "Male" : "Female"}
@@ -106,6 +106,7 @@ export default function Post() {
                     <ul className='text-lg'>
                         <li>{post.washroom === "indian" ? "Indian washroom" : "Western washroom"}</li>
                         <li>{post.ac ? "AC provided" : "Non-AC "}</li>
+                        <li>{post.wifi ? "Wifi Available" : "Wifi not included"}</li>
                     </ul>
                     <p className='text-xl font-bold mt-2 text-primary'>
                         Contact:

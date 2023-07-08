@@ -30,7 +30,7 @@ function EditPost() {
         wifi: true,
         furnished: true,
         gender: "male",
-        bhk: 0,
+        bhk: "1 HK",
         rent: 0,
         address: "",
         description: "",
@@ -335,6 +335,93 @@ function EditPost() {
                             }`
                         }>
                         No
+                    </button>
+                </div>
+                <p className='text-primary text-2xl font-semibold'>How many rooms?</p>
+                <div className='grid grid-cols-3 gap-2 mb-4'>
+                    <button
+                        type='button'
+                        value="1 HK"
+                        id="bhk"
+                        onClick={onChange}
+                        className={
+                            `mr-3 px-7 py-3 text-md uppercase shadow-md rounded-xl
+                            transition duration-150 ease-in-out hover:shadow-secondary
+                            border-accent  w-full
+                            ${bhk == "1 HK" ? "bg-secondary text-light border-0" : "bg-light text-primary border-2"
+                            }`
+                        }>
+                        1 RK / 1 HK
+                    </button>
+                    <button
+                        type='button'
+                        value="1 BHK"
+                        id="bhk"
+                        onClick={onChange}
+                        className={
+                            `mr-3 px-7 py-3 text-md uppercase shadow-md rounded-xl
+                            transition duration-150 ease-in-out hover:shadow-secondary
+                            border-accent w-full
+                            ${bhk == "1 BHK" ? "bg-secondary text-light border-0" : "bg-light text-primary border-2"
+                            }`
+                        }>
+                        1 BHK
+                    </button>
+                    <button
+                        type='button'
+                        value="2 BHK"
+                        id="bhk"
+                        onClick={onChange}
+                        className={
+                            `mr-3 px-7 py-3 text-md uppercase shadow-md rounded-xl
+                            transition duration-150 ease-in-out hover:shadow-secondary
+                            border-accent w-full
+                            ${bhk == "2 BHK" ? "bg-secondary text-light border-0" : "bg-light text-primary border-2"
+                            }`
+                        }>
+                        2 BHK
+                    </button>
+                    <button
+                        type='button'
+                        value="3 BHK"
+                        id="bhk"
+                        onClick={onChange}
+                        className={
+                            `mr-3 px-7 py-3 text-md uppercase shadow-md rounded-xl
+                            transition duration-150 ease-in-out hover:shadow-secondary
+                            border-accent w-full
+                            ${bhk == "3 BHK" ? "bg-secondary text-light border-0" : "bg-light text-primary border-2"
+                            }`
+                        }>
+                        3 BHK
+                    </button>
+                    <button
+                        type='button'
+                        value="4 BHK"
+                        id="bhk"
+                        onClick={onChange}
+                        className={
+                            `mr-3 px-7 py-3 text-md uppercase shadow-md rounded-xl
+                            transition duration-150 ease-in-out hover:shadow-secondary
+                            border-accent w-full
+                            ${bhk == "4 BHK" ? "bg-secondary text-light border-0" : "bg-light text-primary border-2"
+                            }`
+                        }>
+                        4 BHK
+                    </button>
+                    <button
+                        type='button'
+                        value="5 BHK"
+                        id="bhk"
+                        onClick={onChange}
+                        className={
+                            `mr-3 px-7 py-3 text-md uppercase shadow-md rounded-xl
+                            transition duration-150 ease-in-out hover:shadow-secondary
+                            border-accent w-full
+                            ${bhk == "5 BHK" ? "bg-secondary text-light border-0" : "bg-light text-primary border-2"
+                            }`
+                        }>
+                        5 BHK
                     </button>
                 </div>
                 <p className='text-primary text-2xl font-semibold'>Washroom Type:</p>

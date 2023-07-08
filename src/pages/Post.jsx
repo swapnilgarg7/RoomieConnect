@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, EffectFade, Autoplay } from 'swiper';
 import 'swiper/css/bundle';
 import { FaShare, FaMapMarkerAlt } from 'react-icons/fa';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, Marker, Popup } from 'react-leaflet';
 
 export default function Post() {
 
@@ -38,7 +38,7 @@ export default function Post() {
             }
         }
         getPost();
-    }, [params.postId, navigate]);
+    }, [post, params.postId, navigate]);
 
     if (loading) {
         return <Spinner />

@@ -23,7 +23,7 @@ function EditPost() {
 
     const [formData, setFormData] = useState({
         name: "",
-        contact: "",
+        contact: 0,
         vacancy: 1,
         washroom: "indian",
         ac: true,
@@ -38,7 +38,7 @@ function EditPost() {
         lng: 0,
         images: {},
     });
-    const { name, contact, vacancy, washroom, ac, furnished, gender, bhk, rent, address, description, lat, lng, images } = formData;
+    const { name, contact, vacancy, washroom, ac, wifi, furnished, gender, bhk, rent, address, description, lat, lng, images } = formData;
 
     useEffect(() => {
         setLoading(true);
@@ -189,11 +189,52 @@ function EditPost() {
             <form onSubmit={onSubmit}>
                 <p className='text-primary text-2xl font-semibold'>Your Name:</p>
                 <input type='text' id='name' value={name} onChange={onChange} required
-                    className='w-full border border-primary rounded-md p-2 mb-4' />
+                    className='w-full border border-primary rounded-md p-2 mb-2' />
+
+                <p className='text-primary text-2xl font-semibold'>Your Contact Number:</p>
+                <div className='flex mb-6 justify content w-full mx-auto items-center'>
+                    <p className='w-[10%]  text-center'>+91</p>
+                    <input type='number' id='contact' value={contact} onChange={onChange} required
+                        min="1000000000" max="9999999999"
+                        className='w-[90%] border border-primary rounded-md p-2' />
+
+                </div>
+
                 <p className='text-primary text-2xl font-semibold'>Number of Roommates vacancy:</p>
                 <input type='number' id='vacancy' value={vacancy} onChange={onChange} required
                     min="1" max="100"
-                    className='w-full border border-primary rounded-md p-2 mb-4' />
+                    className='w-full border border-primary rounded-md p-2 mb-2' />
+                <div className='flex mb-6'>
+                    <button
+                        type='button'
+                        value="male"
+                        id="gender"
+                        onClick={onChange}
+                        className={
+                            `mr-3 px-7 py-3 text-md uppercase shadow-md rounded-xl
+                            transition duration-150 ease-in-out hover:shadow-secondary
+                            border-accent  w-full
+                            ${gender == "male" ? "bg-secondary text-light border-0" : "bg-light text-primary border-2"
+                            }`
+                        }>
+                        Male
+                    </button>
+                    <button
+                        type='button'
+                        value="female"
+                        id="gender"
+                        onClick={onChange}
+                        className={
+                            `mr-3 px-7 py-3 text-md uppercase shadow-md rounded-xl
+                            transition duration-150 ease-in-out hover:shadow-secondary
+                            border-accent w-full
+                            ${gender == "female" ? "bg-secondary text-light border-0" : "bg-light text-primary border-2"
+                            }`
+                        }>
+                        Female
+                    </button>
+                </div>
+
 
                 <p className='text-primary text-2xl font-semibold'>Rent (per person):</p>
                 <div className='flex mb-4 justify content w-full mx-auto'>
@@ -229,6 +270,68 @@ function EditPost() {
                             transition duration-150 ease-in-out hover:shadow-secondary
                             border-accent w-full
                             ${!ac ? "bg-secondary text-light border-0" : "bg-light text-primary border-2"
+                            }`
+                        }>
+                        No
+                    </button>
+                </div>
+                <p className='text-primary text-2xl font-semibold'>Wifi Provided?</p>
+                <div className='flex mb-4'>
+                    <button
+                        type='button'
+                        value={true}
+                        id="wifi"
+                        onClick={onChange}
+                        className={
+                            `mr-3 px-7 py-3 text-md uppercase shadow-md rounded-xl
+                            transition duration-150 ease-in-out hover:shadow-secondary
+                            border-accent  w-full
+                            ${wifi ? "bg-secondary text-light border-0" : "bg-light text-primary border-2"
+                            }`
+                        }>
+                        Yes
+                    </button>
+                    <button
+                        type='button'
+                        value={false}
+                        id="wifi"
+                        onClick={onChange}
+                        className={
+                            `mr-3 px-7 py-3 text-md uppercase shadow-md rounded-xl
+                            transition duration-150 ease-in-out hover:shadow-secondary
+                            border-accent w-full
+                            ${!wifi ? "bg-secondary text-light border-0" : "bg-light text-primary border-2"
+                            }`
+                        }>
+                        No
+                    </button>
+                </div>
+                <p className='text-primary text-2xl font-semibold'>Furnished?</p>
+                <div className='flex mb-4'>
+                    <button
+                        type='button'
+                        value={true}
+                        id="furnished"
+                        onClick={onChange}
+                        className={
+                            `mr-3 px-7 py-3 text-md uppercase shadow-md rounded-xl
+                            transition duration-150 ease-in-out hover:shadow-secondary
+                            border-accent  w-full
+                            ${furnished ? "bg-secondary text-light border-0" : "bg-light text-primary border-2"
+                            }`
+                        }>
+                        Yes
+                    </button>
+                    <button
+                        type='button'
+                        value={false}
+                        id="furnished"
+                        onClick={onChange}
+                        className={
+                            `mr-3 px-7 py-3 text-md uppercase shadow-md rounded-xl
+                            transition duration-150 ease-in-out hover:shadow-secondary
+                            border-accent w-full
+                            ${!furnished ? "bg-secondary text-light border-0" : "bg-light text-primary border-2"
                             }`
                         }>
                         No

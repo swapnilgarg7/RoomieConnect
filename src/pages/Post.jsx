@@ -107,6 +107,7 @@ export default function Post() {
                         <li>{post.washroom === "indian" ? "Indian washroom" : "Western washroom"}</li>
                         <li>{post.ac ? "AC provided" : "Non-AC "}</li>
                         <li>{post.wifi ? "Wifi Available" : "Wifi not included"}</li>
+                        <li>{post.furnished ? "Furnished" : "Non-furnished"}</li>
                     </ul>
                     <p className='text-xl font-bold mt-2 text-primary'>
                         Contact:

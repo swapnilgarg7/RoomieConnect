@@ -38,7 +38,7 @@ export default function Post() {
             }
         }
         getPost();
-    }, [post, params.postId, navigate]);
+    }, [params.postId, navigate]);
 
     if (loading) {
         return <Spinner />

@@ -3,11 +3,13 @@ import Slider from '../components/Slider'
 import { db } from '../firebase'
 import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
 import Post from '../components/Post';
+import Spinner from '../components/Spinner';
 
 
 function Home() {
 
     const [recentPosts, setRecentPosts] = useState(null);
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         async function getRecentPosts() {
             try {
@@ -19,6 +21,7 @@ function Home() {
                     posts.push({ data: doc.data(), id: doc.id });
                 });
                 setRecentPosts(posts);
+                setLoading(false);
             }
             catch (error) {
                 console.log(error)
@@ -26,6 +29,9 @@ function Home() {
         }
         getRecentPosts();
     })
+    if (loading) {
+        return <Spinner />
+    }
 
     return (
         <div>

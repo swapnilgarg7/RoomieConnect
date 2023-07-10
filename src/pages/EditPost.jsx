@@ -105,7 +105,7 @@ function EditPost() {
         let location;
         if (geoLocationEnabled) {
 
-            const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyDvbN1S8xVpTQh0vNNkK38hYs1_LTXtF_Q`);
+            const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API}`);
             const data = await res.json();
 
             geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;

@@ -31,7 +31,6 @@ export default function Post() {
             if (docSnap.exists()) {
                 setPost(docSnap.data());
                 setLoading(false);
-                console.log(post);
 
             }
             else {

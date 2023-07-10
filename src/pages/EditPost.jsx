@@ -107,11 +107,11 @@ function EditPost() {
 
             const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyDvbN1S8xVpTQh0vNNkK38hYs1_LTXtF_Q`);
             const data = await res.json();
-            console.log(data);
+
             geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
-            console.log("lat" + geolocation.lat);
+
             geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
-            console.log("lng" + geolocation.lng);
+
 
             location = data.status === "ZERO_RESULTS" ? false : true;
 
@@ -137,7 +137,7 @@ function EditPost() {
                 uploadTask.on('state_changed',
                     (snapshot) => {
                         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        console.log('Upload is ' + progress + '% done');
+
                     }
                     , (error) => {
 
@@ -162,7 +162,7 @@ function EditPost() {
                 toast.error("Error uploading images");
                 return;
             });
-        console.log('done' + imgURLs);
+
 
         const formDataCopy = {
             ...formData,

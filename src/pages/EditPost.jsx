@@ -104,10 +104,14 @@ function EditPost() {
         let geolocation = {};
         let location;
         if (geoLocationEnabled) {
-            const res = await fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=' + process.env.GEOCODE_API);
+
+            const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyDvbN1S8xVpTQh0vNNkK38hYs1_LTXtF_Q`);
             const data = await res.json();
+            console.log(data);
             geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
+            console.log("lat" + geolocation.lat);
             geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
+            console.log("lng" + geolocation.lng);
 
             location = data.status === "ZERO_RESULTS" ? false : true;
 

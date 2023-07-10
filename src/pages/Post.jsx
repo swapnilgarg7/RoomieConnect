@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, EffectFade, Autoplay } from 'swiper';
 import 'swiper/css/bundle';
 import { FaShare, FaMapMarkerAlt } from 'react-icons/fa';
-import { MapContainer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
 export default function Post() {
 
@@ -18,6 +18,8 @@ export default function Post() {
 
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const position = [51.505, -0.09]
 
     SwiperCore.use([Navigation, Pagination, EffectFade, Autoplay]);
 
@@ -28,8 +30,9 @@ export default function Post() {
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 setPost(docSnap.data());
-                console.log(post);
                 setLoading(false);
+                console.log(post);
+
             }
             else {
                 navigate('/');
@@ -38,6 +41,9 @@ export default function Post() {
             }
         }
         getPost();
+
+
+
     }, [params.postId, navigate]);
 
     if (loading) {
@@ -123,12 +129,16 @@ export default function Post() {
 
                 </div>
                 <div className=' w-full  z-10 overflow-x-hidden mt-2'>
-                    <MapContainer center={[post.geolocation.lat, post.geolocation.lng]} zoom={13} scrollWheelZoom={true}
-                        style={{ height: "100%", width: "100%" }}>
 
+                    <MapContainer center={[post.geolocation.lat, post.geolocation.lng]} zoom={13} scrollWheelZoom={false}
+                        style={{ height: "100%", width: "100%" }}>
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
                         <Marker position={[post.geolocation.lat, post.geolocation.lng]}>
                             <Popup>
-                                This is the location of the apartment
+                                A pretty CSS3 popup. <br /> Easily customizable.
                             </Popup>
                         </Marker>
                     </MapContainer>
